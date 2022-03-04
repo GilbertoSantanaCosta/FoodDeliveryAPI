@@ -7,10 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "tab_cozinha")
+@Entity  
 public class Cozinha implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,6 +17,9 @@ public class Cozinha implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	public Cozinha() {
+	}
 
 	public Cozinha(Long id, String nome) {
 		super();

@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +20,12 @@ public class Restaurante implements Serializable {
 	private Long id;
 	
 	private String nome;
-	
-	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 
+	public Restaurante() {
+		
+	}
+	
 	public Restaurante(Long id, String nome, BigDecimal taxaFrete) {
 		super();
 		this.id = id;
