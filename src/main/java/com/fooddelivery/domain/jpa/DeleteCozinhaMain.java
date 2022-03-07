@@ -1,14 +1,15 @@
 package com.fooddelivery.domain.jpa;
 
 
-import java.util.List;
+
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
-import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.infrastructure.repository.CadastroCozinhaImpl;
+
 
 public class DeleteCozinhaMain {
 
@@ -18,10 +19,10 @@ public class DeleteCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+		CadastroCozinhaImpl cadastroCozinha = applicationContext.getBean(CadastroCozinhaImpl.class);
 		
 		
-	    cadastroCozinha.delete(1l);
+	    cadastroCozinha.remover(1l);
 	    
 		
 		

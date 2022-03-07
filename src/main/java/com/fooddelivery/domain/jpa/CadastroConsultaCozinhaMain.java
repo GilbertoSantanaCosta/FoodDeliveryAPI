@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
 import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.infrastructure.repository.CadastroCozinhaImpl;
 
 public class CadastroConsultaCozinhaMain {
 
@@ -18,9 +19,9 @@ public class CadastroConsultaCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+		CadastroCozinhaImpl cadastroCozinha = applicationContext.getBean(CadastroCozinhaImpl.class);
 		
-		Cozinha x = cadastroCozinha.buscarPorId();
+		Cozinha x = cadastroCozinha.buscar(1l);
 		
 		 System.out.println(x.getNome());
 	}

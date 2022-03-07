@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
 import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.infrastructure.repository.CadastroCozinhaImpl;
 
 public class IncluirCozinhaMain {
 
@@ -18,7 +19,7 @@ public class IncluirCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+		CadastroCozinhaImpl cadastroCozinha = applicationContext.getBean(CadastroCozinhaImpl.class);
 		
 		Cozinha cozinha1 = new Cozinha();
 		cozinha1.setNome("Brasileira");
@@ -26,8 +27,8 @@ public class IncluirCozinhaMain {
 		Cozinha cozinha2 = new Cozinha();
 		cozinha2.setNome("russa");
 		
-	    cozinha1 = cadastroCozinha.adicionar(cozinha1);
-	    cozinha2 = cadastroCozinha.adicionar(cozinha2);
+	    cozinha1 = cadastroCozinha.salvar(cozinha1);
+	    cozinha2 = cadastroCozinha.salvar(cozinha2);
 		
 		System.out.println(cozinha1.getId() + " \n" + cozinha2.getId() );
 	}
