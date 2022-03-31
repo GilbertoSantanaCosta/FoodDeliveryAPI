@@ -1,4 +1,4 @@
-package com.fooddelivery.domain.jpa;
+package com.fooddelivery.domain.jpa.restaurante;
 
 
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
 import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.domain.model.FormaDePagamento;
 import com.fooddelivery.domain.model.Restaurante;
 import com.fooddelivery.infrastructure.repository.RestauranteImpl;
 
@@ -25,5 +26,6 @@ public class CadastroConsultaRestauranteMain {
 		Restaurante x = restaurante.buscar(1l);
 		
 		 System.out.printf("%s - %f - %s", x.getNome(), x.getTaxaFrete(), x.getCozinha().getNome());
+		 
 	}
 }

@@ -1,4 +1,4 @@
-package com.fooddelivery.domain.jpa;
+package com.fooddelivery.domain.jpa.restaurante;
 
 import java.util.List;
 

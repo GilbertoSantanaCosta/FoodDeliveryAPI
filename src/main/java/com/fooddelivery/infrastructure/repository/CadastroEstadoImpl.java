@@ -8,39 +8,41 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
-import com.fooddelivery.domain.model.Cozinha;
+
+import com.fooddelivery.domain.jpa.estado.cidade.EstadoRepository;
+import com.fooddelivery.domain.model.Estado;
+
 
 @Component
-public class CadastroCozinhaImpl implements CozinhaRepository {
+public class CadastroEstadoImpl implements EstadoRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
 	
 	@Override
-	public List<Cozinha> Listar(Cozinha cozinha) {
+	public List<Estado> Listar(Estado estado) {
 		
-		return manager.createQuery("from Cozinha", Cozinha.class).getResultList();
+		return manager.createQuery("from Estado", Estado.class).getResultList();
 	}
 
 	@Override
 	@Transactional
-	public Cozinha salvar(Cozinha cozinha) {
+	public Estado salvar(Estado estado) {
 		
-		return manager.merge(cozinha);
+		return manager.merge(estado);
 	}
 
 	@Override
-	public Cozinha buscar(Long id) {
+	public Estado buscar(Long id) {
 		
-		return manager.find(Cozinha.class, 1l);
+		return manager.find(Estado.class, 1l);
 	}
 
 	@Override
 	@Transactional
 	public void remover(Long id) {
 		
-		Cozinha c = manager.find(Cozinha.class, 1l);
+		Estado c = manager.find(Estado.class, 1l);
 		manager.remove(c);
 		System.out.println(c.getNome() + " deletada ");
 	}

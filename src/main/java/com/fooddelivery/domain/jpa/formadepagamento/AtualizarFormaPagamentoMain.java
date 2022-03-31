@@ -1,4 +1,4 @@
-package com.fooddelivery.domain.jpa;
+package com.fooddelivery.domain.jpa.formadepagamento;
 
 
 import java.util.List;
@@ -9,9 +9,11 @@ import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
 import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.domain.model.FormaDePagamento;
 import com.fooddelivery.infrastructure.repository.CadastroCozinhaImpl;
+import com.fooddelivery.infrastructure.repository.FormaDePagamentoImpl;
 
-public class AtualizarCozinhaMain {
+public class AtualizarFormaPagamentoMain {
 
 	public static void main(String[] args) {
 		
@@ -19,14 +21,14 @@ public class AtualizarCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CadastroCozinhaImpl cadastroCozinha = applicationContext.getBean(CadastroCozinhaImpl.class);
+		FormaDePagamentoImpl formaPagemento = applicationContext.getBean(FormaDePagamentoImpl.class);
 		
-		Cozinha cozinha = new Cozinha();
-		cozinha.setNome("Brasileira");
-		cozinha.setId(1l);
-	    cozinha = cadastroCozinha.salvar(cozinha);
+		FormaDePagamento pagamento = new FormaDePagamento();
+		pagamento.setDescricao("cartao");
+		pagamento.setId(1l);
+		pagamento = formaPagemento.salvar(pagamento);
 	    
 		
-		System.out.println(cozinha.getId() + " \n" + cozinha.getNome());
+		System.out.println(pagamento.getId() + " \n" + pagamento.getDescricao());
 	}
 }

@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fooddelivery.domain.jpa.CozinhaRepository;
-import com.fooddelivery.domain.jpa.RestauranteRepository;
+import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
+import com.fooddelivery.domain.jpa.restaurante.RestauranteRepository;
 import com.fooddelivery.domain.model.Cozinha;
 import com.fooddelivery.domain.model.Restaurante;
 

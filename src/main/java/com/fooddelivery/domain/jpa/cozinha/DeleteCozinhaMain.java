@@ -1,17 +1,17 @@
-package com.fooddelivery.domain.jpa;
+package com.fooddelivery.domain.jpa.cozinha;
 
 
-import java.util.List;
+
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.fooddelivery.FoodDeliveryApplication;
-import com.fooddelivery.domain.model.Cozinha;
 import com.fooddelivery.infrastructure.repository.CadastroCozinhaImpl;
 
-public class IncluirCozinhaMain {
+
+public class DeleteCozinhaMain {
 
 	public static void main(String[] args) {
 		
@@ -21,15 +21,10 @@ public class IncluirCozinhaMain {
 		
 		CadastroCozinhaImpl cadastroCozinha = applicationContext.getBean(CadastroCozinhaImpl.class);
 		
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setNome("Brasileira");
 		
-		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("russa");
+	    cadastroCozinha.remover(1l);
+	    
 		
-	    cozinha1 = cadastroCozinha.salvar(cozinha1);
-	    cozinha2 = cadastroCozinha.salvar(cozinha2);
 		
-		System.out.println(cozinha1.getId() + " \n" + cozinha2.getId() );
 	}
 }
