@@ -6,7 +6,7 @@ import com.fooddelivery.domain.model.Cozinha;
 
 public interface CozinhaRepository {
 
-	List<Cozinha> Listar (Cozinha cozinha);
+	List<Cozinha> Listar ();
 	Cozinha salvar (Cozinha cozinha);
 	Cozinha buscar (Long id);
 	void remover (Long id);
