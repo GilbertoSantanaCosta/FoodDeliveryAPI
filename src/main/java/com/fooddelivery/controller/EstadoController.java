@@ -26,10 +26,12 @@ public class EstadoController {
 		return estadoRepository.Listar();
 	}
 
+	/*
 	// envia apenas em json 
 	@GetMapping(produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	public List<Estado> listar2() {
 
 		return estadoRepository.Listar();
 	}
+	*/
 }
