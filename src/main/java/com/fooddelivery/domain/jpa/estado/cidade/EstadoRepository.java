@@ -9,7 +9,7 @@ import com.fooddelivery.domain.model.Estado;
 
 public interface EstadoRepository {
 
-	List<Estado> Listar (Estado Estado);
+	List<Estado> Listar ();
 	Estado salvar (Estado Estado);
 	Estado buscar (Long id);
 	void remover (Long id);
