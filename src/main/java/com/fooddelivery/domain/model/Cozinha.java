@@ -8,11 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+// @JsonRootName("gastronomia") // renomeia o nome da classe no corpo do json 
 //@Getter
 //@Setter
 //@EqualsAndHashCode
@@ -27,6 +32,9 @@ public class Cozinha implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	//@JsonIgnore  // Ignora o atributo no corpo do json 
+	//@JsonProperty("Outro nome")   // renomeia o atributo no compo do json
 	private String nome;
 	
 }
