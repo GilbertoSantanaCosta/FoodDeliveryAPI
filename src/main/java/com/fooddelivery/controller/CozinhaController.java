@@ -4,6 +4,9 @@ package com.fooddelivery.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +38,18 @@ public class CozinhaController {
 	}
 	
 	@GetMapping("/{cozinhaId}")
-	public Cozinha buscar(@PathVariable Long cozinhaId) {
+	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
 		
-		return cozinhaRepository.buscar(cozinhaId);
+		Cozinha c = cozinhaRepository.buscar(cozinhaId);
+		
+		//return ResponseEntity.status(HttpStatus.OK).body(c);
+		//return ResponseEntity.ok().body(c);
+		
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.add(HttpHeaders.LOCATION, "http://localhost:8090/cozinhas" );
+		
+		return ResponseEntity.notFound().headers(headers).build();
+ 		
 	}
 }

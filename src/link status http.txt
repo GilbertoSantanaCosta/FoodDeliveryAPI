@@ -1,0 +1,3 @@
+Link para status HTTP
+
+https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status
