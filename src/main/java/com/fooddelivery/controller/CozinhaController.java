@@ -42,14 +42,12 @@ public class CozinhaController {
 		
 		Cozinha c = cozinhaRepository.buscar(cozinhaId);
 		
-		//return ResponseEntity.status(HttpStatus.OK).body(c);
-		//return ResponseEntity.ok().body(c);
+		if(c != null) {
+			
+			return ResponseEntity.ok().body(c);
+		}
 		
-		HttpHeaders headers = new HttpHeaders();
-		
-		headers.add(HttpHeaders.LOCATION, "http://localhost:8090/cozinhas" );
-		
-		return ResponseEntity.notFound().headers(headers).build();
+		return ResponseEntity.notFound().build();
  		
 	}
 }

@@ -33,14 +33,14 @@ public class CadastroCozinhaImpl implements CozinhaRepository {
 	@Override
 	public Cozinha buscar(Long id) {
 		
-		return manager.find(Cozinha.class, 1l);
+		return manager.find(Cozinha.class, id);
 	}
 
 	@Override
 	@Transactional
 	public void remover(Long id) {
 		
-		Cozinha c = manager.find(Cozinha.class, 1l);
+		Cozinha c = manager.find(Cozinha.class, id);
 		manager.remove(c);
 		System.out.println(c.getNome() + " deletada ");
 	}
