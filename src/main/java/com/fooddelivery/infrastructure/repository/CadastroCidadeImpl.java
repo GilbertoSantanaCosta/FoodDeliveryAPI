@@ -34,7 +34,7 @@ public class CadastroCidadeImpl implements CidadeRepository {
 	@Override
 	public Cidade buscar(Long id) {
 		
-		return manager.find(Cidade.class, 1l);
+		return manager.find(Cidade.class, id);
 	}
 
 	@Override
