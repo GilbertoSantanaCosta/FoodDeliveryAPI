@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fooddelivery.api.model.CozinhaXmlWrapper;
 import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
 import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -27,6 +28,8 @@ public class CozinhaController {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
+	@Autowired
+	private CadastroCozinhaService cadastroCozinha;
 
 	@GetMapping
 	public List<Cozinha> listar() {
@@ -53,13 +56,15 @@ public class CozinhaController {
 		return ResponseEntity.notFound().build();
 
 	}
-
+	
 	@PostMapping
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public void adicionar(@RequestBody Cozinha cozinha) {
-
-		cozinhaRepository.salvar(cozinha);
+	public ResponseEntity<Cozinha> salvar(@RequestBody Cozinha cozinha) {
+		
+		Cozinha c = cadastroCozinha.salvar(cozinha);
+		
+		return ResponseEntity.created(null).body(cozinha);
 	}
+
 
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Cozinha cozinha) {
