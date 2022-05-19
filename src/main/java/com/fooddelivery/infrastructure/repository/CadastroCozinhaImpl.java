@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +40,15 @@ public class CadastroCozinhaImpl implements CozinhaRepository {
 	@Override
 	@Transactional
 	public void remover(Long id) {
+		Cozinha c = buscar(id);
 		
-		Cozinha c = manager.find(Cozinha.class, id);
+		if(c == null) {
+			
+			throw new EmptyResultDataAccessException(1);
+		}
+		
 		manager.remove(c);
-		System.out.println(c.getNome() + " deletada ");
+		
 	}
 
 }

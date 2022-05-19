@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fooddelivery.api.model.CozinhaXmlWrapper;
+import com.fooddelivery.domain.exception.EntidadeEmUsoException;
+import com.fooddelivery.domain.exception.EntidadeNaoEncontradaException;
 import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
 import com.fooddelivery.domain.model.Cozinha;
 import com.fooddelivery.domain.service.CadastroCozinhaService;
@@ -35,12 +36,6 @@ public class CozinhaController {
 	public List<Cozinha> listar() {
 
 		return cozinhaRepository.Listar();
-	}
-
-	@GetMapping(produces = org.springframework.http.MediaType.APPLICATION_XML_VALUE)
-	public CozinhaXmlWrapper listarWrapperXml() {
-
-		return new CozinhaXmlWrapper(cozinhaRepository.Listar());
 	}
 
 	@GetMapping("/{cozinhaId}")
@@ -74,7 +69,7 @@ public class CozinhaController {
 		if (c != null) {
 			BeanUtils.copyProperties(c, cozinha, "id");
 
-			cozinhaRepository.salvar(c);
+			cadastroCozinha.salvar(c);
 			
 			return ResponseEntity.ok(c);
 		}
@@ -84,14 +79,18 @@ public class CozinhaController {
 
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
-		Cozinha c = cozinhaRepository.buscar(cozinhaId);
+		
+		try {
+			cadastroCozinha.remover(cozinhaId);
 
-		if (c != null) {
-			cozinhaRepository.remover(cozinhaId);
-
-			return ResponseEntity.noContent().build();
+			 return ResponseEntity.noContent().build();
+		}catch(EntidadeEmUsoException e) {
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}catch(EntidadeNaoEncontradaException e) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return ResponseEntity.notFound().build();
 	}
 
 }

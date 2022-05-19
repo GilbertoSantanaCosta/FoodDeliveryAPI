@@ -1,12 +1,16 @@
 package com.fooddelivery.domain.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,4 +41,7 @@ public class Cozinha implements Serializable {
 	//@JsonProperty("Outro nome")   // renomeia o atributo no compo do json
 	private String nome;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cozinha")
+	private List<Restaurante> restaurantes = new ArrayList<>();
 }
