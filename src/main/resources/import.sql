@@ -10,5 +10,9 @@ insert into forma_de_pagamento (descricao) values('dinheiro');
 insert into permissao (nome , descricao) values('compra', 'compra permitida');
 
 insert into estado (nome) values ('são paulo');
+insert into estado (nome) values ('rio de janeiro');
 
-insert into cidade (nome) values ('carapicuiba');
+insert into cidade (nome, estado_id) values ('carapicuiba' , 1);
+insert into cidade (nome, estado_id) values ('osasco' , 1);
+insert into cidade (nome, estado_id) values ('itapevi', 1);
+insert into cidade (nome, estado_id) values ('ipanema', 2);

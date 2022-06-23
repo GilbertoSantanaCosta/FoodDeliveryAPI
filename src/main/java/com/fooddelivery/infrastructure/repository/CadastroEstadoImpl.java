@@ -35,14 +35,14 @@ public class CadastroEstadoImpl implements EstadoRepository {
 	@Override
 	public Estado buscar(Long id) {
 		
-		return manager.find(Estado.class, 1l);
+		return manager.find(Estado.class, id);
 	}
 
 	@Override
 	@Transactional
 	public void remover(Long id) {
 		
-		Estado c = manager.find(Estado.class, 1l);
+		Estado c = manager.find(Estado.class, id);
 		manager.remove(c);
 		System.out.println(c.getNome() + " deletada ");
 	}

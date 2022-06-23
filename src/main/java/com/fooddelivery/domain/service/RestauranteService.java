@@ -24,14 +24,12 @@ public class RestauranteService {
 		
 		return repository.listar();
 	}
-	
 	public Restaurante buscar(Long id) {
 		
 		Restaurante restaurante =  repository.buscar(id);
 		
 		return restaurante;
 	}
-	
 	public void salvar(Restaurante restaurante) {
 		Long id = restaurante.getCozinha().getId();
 		Cozinha cozinha = cozinhaRepository.buscar(restaurante.getCozinha().getId());
@@ -41,5 +39,26 @@ public class RestauranteService {
 		}
 		
 		repository.salvar(restaurante);
+	}
+	
+	public void atualizar(Restaurante restaurante) {
+		
+		
+		Long idRestaurante = restaurante.getId();
+		Restaurante buscaRestaurante = repository.buscar(idRestaurante);
+		
+		Long idCozinha = restaurante.getCozinha().getId();
+		Cozinha cozinha = cozinhaRepository.buscar(restaurante.getCozinha().getId());
+		
+		
+		if(cozinha == null) {
+			throw new EntidadeNaoEncontradaException("Cozinha com o codigo " + idCozinha + " não cadastrada " );
+		}
+		
+		if(buscaRestaurante != null) {
+			repository.salvar(buscaRestaurante);
+		}else {
+			throw new EntidadeNaoEncontradaException("Restaurante com o codigo " + idRestaurante + " não cadastrada " );
+		}
 	}
 }

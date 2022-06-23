@@ -35,7 +35,7 @@ public class RestauranteImpl implements RestauranteRepository {
 	@Override
 	public Restaurante buscar(Long id) {
 		
-		return manager.find(Restaurante.class, 1l);
+		return manager.find(Restaurante.class, id);
 	}
 
 	@Override

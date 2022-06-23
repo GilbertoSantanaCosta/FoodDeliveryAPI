@@ -1,5 +1,6 @@
 package com.fooddelivery.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,6 @@ public class Cidade {
 	private Long id;
 	private String nome;
 	
-	@ManyToOne
+	@ManyToOne//(cascade = CascadeType.ALL)
 	public Estado estado;
 }

@@ -19,7 +19,7 @@ public class CadastroCidadeImpl implements CidadeRepository {
 	private EntityManager manager;
 	
 	@Override
-	public List<Cidade> Listar(Cidade cidade) {
+	public List<Cidade> listar() {
 		
 		return manager.createQuery("from Cidade", Cidade.class).getResultList();
 	}
@@ -41,7 +41,7 @@ public class CadastroCidadeImpl implements CidadeRepository {
 	@Transactional
 	public void remover(Long id) {
 		
-		Cidade c = manager.find(Cidade.class, 1l);
+		Cidade c = manager.find(Cidade.class, id);
 		manager.remove(c);
 		System.out.println(c.getNome() + " deletada ");
 	}
