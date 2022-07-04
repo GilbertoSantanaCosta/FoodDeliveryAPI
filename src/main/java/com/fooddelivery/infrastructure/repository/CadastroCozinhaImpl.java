@@ -7,12 +7,13 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
 import com.fooddelivery.domain.model.Cozinha;
 
-@Component
+@Repository
 public class CadastroCozinhaImpl implements CozinhaRepository {
 
 	@PersistenceContext
@@ -49,6 +50,14 @@ public class CadastroCozinhaImpl implements CozinhaRepository {
 		
 		manager.remove(c);
 		
+	}
+
+	@Override
+	public List<Cozinha> buscarPorNome(String name) {
+		
+		return manager.createQuery("from Cozinha where nome like :nome", Cozinha.class)
+					  .setParameter("nome","%" + name + "%")
+					  .getResultList();
 	}
 
 }
