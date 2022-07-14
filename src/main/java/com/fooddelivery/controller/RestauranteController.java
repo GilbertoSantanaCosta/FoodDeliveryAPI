@@ -3,10 +3,11 @@ package com.fooddelivery.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fooddelivery.domain.exception.EntidadeNaoEncontradaException;
-import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
-import com.fooddelivery.domain.jpa.restaurante.RestauranteRepository;
-import com.fooddelivery.domain.model.Restaurante;
-import com.fooddelivery.domain.service.RestauranteService;
+import com.fooddelivery.exception.EntidadeNaoEncontradaException;
+import com.fooddelivery.model.Restaurante;
+import com.fooddelivery.service.RestauranteService;
 
 @RestController
 @RequestMapping("/restaurante")
@@ -30,28 +28,30 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteService restauranteService;
 
-	@Autowired
-	private RestauranteRepository restauranteRepository;
-
 	@GetMapping
-	public List<Restaurante> listar() {
+	public List<Restaurante> findAll() {
 
-		return restauranteService.listar();
+		return restauranteService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Restaurante> buscar(@PathVariable Long id) {
+	public ResponseEntity<Restaurante> findById(@PathVariable Long id) {
 
-		Restaurante restaurante = restauranteService.buscar(id);
+		Restaurante restaurante = restauranteService.findById(id);
+		
+		if(restaurante == null) {
+			
+			return ResponseEntity.notFound().build();
+		}
 
 		return ResponseEntity.ok().body(restaurante);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody Restaurante restaurante) {
+	public ResponseEntity<?> save(@RequestBody Restaurante restaurante) {
 
 		try {
-			restauranteService.salvar(restaurante);
+			restauranteService.save(restaurante);
 
 			return ResponseEntity.created(null).build();
 		} catch (EntidadeNaoEncontradaException e) {
@@ -61,14 +61,13 @@ public class RestauranteController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> Atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Restaurante restaurante){
 		
 		Restaurante res = restaurante;
 		res.setId(id);
-	
 		
 		try {
-			restauranteService.atualizar(res);
+			restauranteService.update(res);
 			
 			return ResponseEntity.created(null).build();
 		} catch (EntidadeNaoEncontradaException e) {
@@ -80,7 +79,7 @@ public class RestauranteController {
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody Map<String , Object> campos){
 		
-		Restaurante restaurante = restauranteService.buscar(id);
+		Restaurante restaurante = restauranteService.findById(id);
 		
 		if (restaurante == null) {
 			
@@ -89,7 +88,7 @@ public class RestauranteController {
 		
 		merge(campos, restaurante);
 		
-		return Atualizar(id, restaurante);
+		return update(id, restaurante);
 		
 	}
 	
@@ -108,6 +107,19 @@ public class RestauranteController {
 			ReflectionUtils.setField(field, restauranteDestino, novoValor);
 			
 		});
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id){
+		
+		try {
+			restauranteService.delete(id);
+			return ResponseEntity.ok(null);
+		
+		} catch (EntidadeNaoEncontradaException e) {
+			
+			return ((BodyBuilder) ResponseEntity.notFound()).body(e.getMessage());
+		}
 	}
 	
 	

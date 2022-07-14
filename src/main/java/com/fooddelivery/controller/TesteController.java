@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fooddelivery.domain.jpa.cozinha.CozinhaRepository;
-import com.fooddelivery.domain.model.Cozinha;
+import com.fooddelivery.model.Cozinha;
+import com.fooddelivery.repository.CozinhaRepository;
 
 @RestController
 @RequestMapping("/test")
@@ -21,7 +21,7 @@ public class TesteController {
 	@GetMapping("/buscaPorNome")
 	public List<Cozinha> buscaPorNome(@RequestParam String nome){
 		
-		return cozinhaRepository.buscarPorNome(nome);
+		return null;//cozinhaRepository.buscarPorNome(nome);
 	}
 	
 }

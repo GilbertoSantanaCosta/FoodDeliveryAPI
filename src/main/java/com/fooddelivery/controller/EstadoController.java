@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fooddelivery.domain.exception.EntidadeEmUsoException;
-import com.fooddelivery.domain.exception.EntidadeNaoEncontradaException;
-import com.fooddelivery.domain.jpa.estado.cidade.EstadoRepository;
-import com.fooddelivery.domain.model.Estado;
-import com.fooddelivery.domain.service.EstadoService;
+import com.fooddelivery.exception.EntidadeEmUsoException;
+import com.fooddelivery.exception.EntidadeNaoEncontradaException;
+import com.fooddelivery.model.Estado;
+import com.fooddelivery.repository.EstadoRepository;
+import com.fooddelivery.service.EstadoService;
 
 @RestController                    // Padroniza para a classe o formato de envio 
 @RequestMapping(value = "/estados")//produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
@@ -33,9 +33,9 @@ public class EstadoController {
 	// passa envio em json e xml
 	@GetMapping(produces = { org.springframework.http.MediaType.APPLICATION_JSON_VALUE,
 			org.springframework.http.MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<List<Estado>>  listar() {
+	public ResponseEntity<List<Estado>>  findAll() {
 
-		List<Estado> estados = estadoService.listar();
+		List<Estado> estados = estadoService.findAll();
 		return ResponseEntity.ok(estados);
 	}
 
@@ -49,40 +49,40 @@ public class EstadoController {
 	*/
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Estado> buscar(@PathVariable Long id) {
+	public ResponseEntity<Estado> findById(@PathVariable Long id) {
 		
-		Estado estado = estadoService.buscar(id);
+		Estado estado = estadoService.findById(id);
 		
 		if(estado == null){
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.notFound().build();
 		}
 		
 		return ResponseEntity.ok().body(estado);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Estado> salvar(@RequestBody Estado estado){
+	public ResponseEntity<Estado> save(@RequestBody Estado estado){
 		
-		 Estado e = estadoService.salvar(estado);
+		 Estado e = estadoService.save(estado);
 		
 		return ResponseEntity.created(null).body(e);
 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Estado> atualizar(@PathVariable Long id, @RequestBody Estado estado){
+	public ResponseEntity<Estado> updade(@PathVariable Long id, @RequestBody Estado estado){
 		
-		Estado estadoTest = estadoService.buscar(id);
+		Estado estadoTest = estadoService.findById(id);
 		estado.setId(id);
 		if(estadoTest == null){
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.notFound().build();
 		}
-		Estado e = estadoService.salvar(estado);
+		Estado e = estadoService.save(estado);
 		return ResponseEntity.ok().body(e);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Estado> delete(@PathVariable Long id){
+	public ResponseEntity<Estado> remove(@PathVariable Long id){
 		
 		try {
 			estadoService.delete(id);

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fooddelivery.domain.exception.EntidadeNaoEncontradaException;
-import com.fooddelivery.domain.model.Cidade;
-import com.fooddelivery.domain.service.CidadeService;
+import com.fooddelivery.exception.EntidadeNaoEncontradaException;
+import com.fooddelivery.model.Cidade;
+import com.fooddelivery.service.CidadeService;
 
 @RestController
 @RequestMapping("/cidade")
@@ -25,41 +25,53 @@ public class CidadeController {
 	private CidadeService cidadeService;
 	
 	@GetMapping
-	public ResponseEntity<List<Cidade>> listar(){
+	public ResponseEntity<List<Cidade>> findAll(){
 		
-		List<Cidade> cidades = cidadeService.listar();
+		List<Cidade> cidades = cidadeService.findAll();
 		return ResponseEntity.ok().body(cidades);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cidade> listar(@PathVariable Long id){
+	public ResponseEntity<Cidade> findById(@PathVariable Long id){
 		
-	    Cidade cidade = cidadeService.buscar(id);
+	    Cidade cidade = cidadeService.findById(id);
+	    
+	    if(cidade == null) {
+			
+			return ResponseEntity.notFound().build();
+		}
+
 		return ResponseEntity.ok().body(cidade);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cidade> salvar(@RequestBody Cidade cidade){
+	public ResponseEntity<Cidade> save(@RequestBody Cidade cidade){
 		
-		Cidade cidadeSalva = cidadeService.salvar(cidade);
+		Cidade cidadeSalva = cidadeService.save(cidade);
 		
 		return ResponseEntity.ok().body(cidadeSalva);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Cidade> atualizar(@PathVariable Long id, @RequestBody Cidade cidade){
+	public ResponseEntity<Cidade> update(@PathVariable Long id, @RequestBody Cidade cidade){
+		
+		Cidade city = cidadeService.findById(id);
+		
+		if (city == null) {
+			
+			ResponseEntity.notFound().build();
+		}
 		
 		cidade.setId(id);
-		cidadeService.salvar(cidade);
-
+		cidadeService.save(cidade);
 		return ResponseEntity.ok().body(cidade);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> remove(@PathVariable Long id){
+	public ResponseEntity<?> delete(@PathVariable Long id){
 		
 		try {
-			cidadeService.remover(id);
+			cidadeService.delete(id);
 			return ResponseEntity.ok().build();
 		
 		} catch (EntidadeNaoEncontradaException e) {
